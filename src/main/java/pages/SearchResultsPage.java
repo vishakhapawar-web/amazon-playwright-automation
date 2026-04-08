@@ -1,35 +1,48 @@
+// SearchResultsPage.java
 package pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Locator;
 
 public class SearchResultsPage {
-
     private Page page;
+    private Locator searchResults;
 
     public SearchResultsPage(Page page) {
         this.page = page;
+        // All search result items on Amazon
+        searchResults = page.locator("div.s-result-item");
     }
 
-    private String searchResults = "[data-component-type='s-search-result']";
+    /**
+     * Selects the product by name. Uses contains/regex matching to handle variations.
+     */
+    public void selectProductByName(String productName) {
+        // Wait for results to load
+        searchResults.first().waitFor();
 
-    public boolean isSearchResultDisplayed() {
+        boolean found = false;
+        int count = searchResults.count();
 
-        // Wait until results appear (IMPORTANT)
-        page.waitForSelector(searchResults,
-                new Page.WaitForSelectorOptions().setTimeout(15000));
+        for (int i = 0; i < count; i++) {
+            String itemText = searchResults.nth(i).innerText();
+            if (itemText.contains(productName)) {
+                searchResults.nth(i).locator("text=" + productName).click();
+                found = true;
+                break;
+            }
+        }
 
-        Locator results = page.locator(searchResults);
-
-        return results.count() > 0;
+        if (!found) {
+            throw new RuntimeException("Not enough products found! Could not locate: " + productName);
+        }
     }
 
-    public void selectProduct(String productName) {
-
-        page.locator("h2 span")
-                .filter(new Locator.FilterOptions()
-                        .setHasText(productName))
-                .first()
-                .click();
+    /**
+     * Optional helper: verify search results exist
+     */
+    public boolean verifyResultsExist() {
+        searchResults.first().waitFor();
+        return searchResults.count() > 0;
     }
 }
