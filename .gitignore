@@ -1,0 +1,19 @@
+# Maven build output
+target/
+
+# macOS system files
+.DS_Store
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+
+# Playwright browser cache
+ms-playwright/
+
+# Node temp files (Playwright internal)
+node_modules/
