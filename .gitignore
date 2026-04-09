@@ -1,19 +1,19 @@
-# Maven build output
+# Maven
 target/
 
-# macOS system files
-.DS_Store
-
-# IDE files
-.idea/
-*.iml
-.vscode/
+# Allure Reports
+allure-results/
+allure-report/
 
 # Logs
 *.log
 
-# Playwright browser cache
-ms-playwright/
+# Mac
+.DS_Store
 
-# Node temp files (Playwright internal)
-node_modules/
+# IntelliJ
+.idea/
+*.iml
+
+# temp files
+cp.txt

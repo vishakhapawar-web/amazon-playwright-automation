@@ -1,0 +1,8 @@
+{
+  "amazonTestData": {
+    "searchProduct": "HP smart tank",
+    "productName": "Smart Tank 589",
+    "quantity": "2",
+    "expectedSubtotalContains": "₹"
+  }
+}
